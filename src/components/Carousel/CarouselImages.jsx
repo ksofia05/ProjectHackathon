@@ -107,7 +107,7 @@ const ImageCarousel = () => {
     <div className="w-full max-w-6xl mx-auto px-4 relative">
       <div className="text-center text-black font-dongle transition-shadow duration-300 p-6 rounded-lg">
         <h1 className="text-5xl mb-1">Escoge Tu Próximo Destino</h1>
-        <h2 className="text-3xl">Selecciona el País que tengas en mente</h2>
+        <h2 className="text-3xl">Selecciona el País que Tengas en Mente</h2>
       </div>
 
       <div className="flex flex-col gap-4 my-4">
