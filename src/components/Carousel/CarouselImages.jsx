@@ -58,7 +58,7 @@ const ImageCarousel = () => {
     const filteredCountries = countries.filter((country) => {
       if (!country) return false;
       
-      // Si hay una subregión seleccionada, filtrar por ella
+      // Si hay una subregión seleccionada, filtrar los paises por sección 
       if (selectedSubregion) {
         return country.subregion === selectedSubregion;
       }
@@ -111,7 +111,7 @@ const ImageCarousel = () => {
       </div>
 
       <div className="flex flex-col gap-4 my-4">
-        {/* Búsqueda */}
+        {/* Buscador */}
         <div className="flex justify-center">
           <input
             type="text"
