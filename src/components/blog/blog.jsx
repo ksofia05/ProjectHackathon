@@ -1,6 +1,6 @@
 import React from 'react';
-import rasgadoSuperior from '../blog/rasgadoSuperior.png';
-import rasgadoInferior from '../blog/rasgadoInferior.png';
+import rasgadoSuperior from '../../../public/images/rasgadoSuperior.png';
+import rasgadoInferior from '../../../public/images/rasgadoInferior.png';
 import imageBlog from '../blog/imageBlog.svg';
 
 const Blog = () => {
