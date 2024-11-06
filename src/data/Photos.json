@@ -1,33 +1,22 @@
 [
-    {
-      "id": 1,
-      "url": "/images/mexico.svg",
-      "title": "Mexico",
-      "description": "Explora las maravillas de México!"
-    },
-    {
-      "id": 2,
-      "url": "/images/brasil.svg",
-      "title": "Brasil",
-      "description": "Conoce al cristo más grande de latinoamerica!"
-    },
-    {
-      "id": 3,
-      "url": "/images/peru.svg",
-      "title": "Perú",
-      "description": "Conoce los misterios de Perú!"
-    },
-    {
-        "id": 4,
-        "url": "/images/ecuador.svg",
-        "title": "Ecuador",
-        "description": "Conoce las hermosas playas de Ecuador!"
-      },
-      {
-        "id": 5,
-        "url": "/images/panama.svg",
-        "title": "Panama",
-        "description": "Descubre el canal de Panama!"
-      }
-  ]
-  
+  {
+    "id": 1,
+    "url": "https://wallpaperaccess.com/full/1437088.jpg"
+  },
+  {
+    "id": 2,
+    "url": "https://wallpaperaccess.com/full/4695093.jpg"
+  },
+  {
+    "id": 3,
+    "url": "https://www.hurra-nyaralunk.hu/sites/default/files/utazas-korutazas/76368/peru-nagy-korutazas-kis.jpg"
+  },
+  {
+    "id": 4,
+    "url": "https://images7.alphacoders.com/748/thumb-1920-748567.jpg"
+  },
+  {
+    "id": 5,
+    "url": "https://wallpapercave.com/wp/wp2019526.jpg"
+  }
+]
