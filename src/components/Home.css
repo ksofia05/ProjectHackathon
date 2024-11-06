@@ -1,0 +1,126 @@
+/* Fondo general */
+.home {
+    font-family: Dongle;
+    color: white;
+    background-image: url('/path/to/your/image.jpg'); /* Reemplaza con la ruta a tu imagen */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Encabezado */
+  .home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .home-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .home-nav a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .home-user-icon {
+    font-size: 1.2rem;
+  }
+  
+  /* Sección "Hero" */
+  .home-hero {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .home-country {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  
+  .home-tagline {
+    font-size: 1.2rem;
+  }
+   /* Estilo base para todas las secciones */
+.section {
+  padding: 4rem 2rem;
+  min-height: 100vh; /* Cada sección ocupa la altura de la ventana */
+}
+
+.home-section {
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.about-section {
+  background-color: #e0f7fa;
+  text-align: center;
+}
+
+.destinations-section {
+  background-color: #ffe0b2;
+  text-align: center;
+}
+
+.blog-section {
+  background-color: #d1c4e9;
+  text-align: center;
+}
+.section {
+  padding: 4rem 2rem;
+  min-height: 100vh;
+}
+
+.contact-section {
+  background-color: #f7f7f7;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.contact-section h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.contact-section p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.icon {
+  font-size: 2.5rem;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.icon:hover {
+  color: #0077b5; /* Cambia este color según el icono */
+}
+
+.facebook-icon:hover {
+  color: #3b5998;
+}
+
+.instagram-icon:hover {
+  color: #E4405F;
+}
+
+.whatsapp-icon:hover {
+  color: #25D366;
+}
