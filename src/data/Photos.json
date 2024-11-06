@@ -1,0 +1,33 @@
+[
+    {
+      "id": 1,
+      "url": "/images/mexico.svg",
+      "title": "Mexico",
+      "description": "Explora las maravillas de México!"
+    },
+    {
+      "id": 2,
+      "url": "/images/brasil.svg",
+      "title": "Brasil",
+      "description": "Conoce al cristo más grande de latinoamerica!"
+    },
+    {
+      "id": 3,
+      "url": "/images/peru.svg",
+      "title": "Perú",
+      "description": "Conoce los misterios de Perú!"
+    },
+    {
+        "id": 4,
+        "url": "/images/ecuador.svg",
+        "title": "Ecuador",
+        "description": "Conoce las hermosas playas de Ecuador!"
+      },
+      {
+        "id": 5,
+        "url": "/images/panama.svg",
+        "title": "Panama",
+        "description": "Descubre el canal de Panama!"
+      }
+  ]
+  
