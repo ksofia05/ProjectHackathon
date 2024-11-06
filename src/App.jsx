@@ -1,14 +1,17 @@
-import { useState } from 'react'
-import Home from "../src/page/home"
-import './App.css'
+// App.js
+import React from 'react';
+import { CountriesProvider } from './components/CountriesList.js/Countriestcontext';
+import CountriesList from './components/CountriesList.js/CountriesList';
+import ImageCarousel   from "./components/Carousel/CarouselImages";
 
 
 function App() {
   return (
-    <>
-      <Home />
-    </>
-  )
+    <CountriesProvider>
+      <ImageCarousel/>
+  
+    </CountriesProvider>
+  );
 }
 
 export default App;
