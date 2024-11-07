@@ -1,24 +1,22 @@
-// App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CountriesProvider } from './components/CountriesList.js/Countriestcontext';
 import Home from './page/home';
-// import Destinations from './components/Destinations';
-// import NotFound from './components/NotFound';
+import Navbar from './components/navbar/Navbar'; // Asegúrate de importar el Navbar
 import ImageCarousel from "./components/Carousel/CarouselImages";
 
 function App() {
   return (
     <CountriesProvider>
       <Router>
+        {/* Navbar disponible en todas las rutas */}
+        <Navbar /> 
+
         <Routes>
           <Route path="/" element={<Home />} /> {/* Página principal */}
-          {/* <Route path="/destinations" element={<Destinations />} />
-          <Route path="*" element={<NotFound />} /> */}
+          <Route path="/destinations" element={<ImageCarousel />} /> {/* Carrusel en la ruta /destinations */}
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
-        
-        {/* Componente de carrusel, que se puede mostrar en todas las rutas */}
-        <ImageCarousel />
       </Router>
     </CountriesProvider>
   );

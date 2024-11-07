@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-scroll';
+import { Link } from 'react-router-dom'; // Importar Link de react-router-dom
 
 const Navbar = () => {
   return (
@@ -9,9 +9,7 @@ const Navbar = () => {
         <ul className="flex space-x-8">
           <li>
             <Link
-              to="home"
-              smooth={true}
-              duration={500} // Duración en milisegundos
+              to="/"  // Enlace a la ruta principal
               className="text-lg hover:text-blue-500 transition-colors duration-300"
             >
               Home
@@ -19,9 +17,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="about"
-              smooth={true}
-              duration={500}
+              to="/about"  // Enlace a la sección "Quienes Somos" si existe una ruta
               className="text-lg hover:text-blue-500 transition-colors duration-300"
             >
               Quienes Somos
@@ -29,9 +25,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="destinations"
-              smooth={true}
-              duration={500}
+              to="/destinations"  // Enlace a la ruta de destinos
               className="text-lg hover:text-blue-500 transition-colors duration-300"
             >
               Destinos
@@ -39,9 +33,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="blog"
-              smooth={true}
-              duration={500}
+              to="/blog"  // Enlace a la ruta del blog si existe una
               className="text-lg hover:text-blue-500 transition-colors duration-300"
             >
               Blog
