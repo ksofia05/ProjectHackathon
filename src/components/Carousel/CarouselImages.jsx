@@ -15,70 +15,113 @@ const ImageCarousel = () => {
   const itemsPerView = 4;
   const maxCountries = 12;
 
-  // Detectar cuando se busca una región
   useEffect(() => {
     const searchLower = searchTerm.toLowerCase().trim();
-    
-    // Mapeo de términos de búsqueda a regiones
+  
+    // Mapeo de términos de búsqueda en español a inglés
     const regionMappings = {
       'america': 'Americas',
+      'americas': 'Americas',
       'europa': 'Europe',
+      'europe': 'Europe',
       'asia': 'Asia',
       'africa': 'Africa',
       'oceania': 'Oceania'
     };
-
-    // Encontrar la región que coincide con la búsqueda
-    const matchedRegion = Object.entries(regionMappings)
-      .find(([key]) => searchLower.includes(key));
-
+  
+    // Determinamos la región de forma uniforme en inglés
+    const matchedRegion = regionMappings[searchLower] || 
+                          Object.values(regionMappings).find(region => region.toLowerCase() === searchLower);
+  
     if (matchedRegion) {
-      // Obtener subregiones para la región encontrada
+      // Obtenemos subregiones para la región detectada
       const subregions = [...new Set(
         countries
-          ?.filter(country => country.region === matchedRegion[1])
+          .filter(country => country.region === matchedRegion)
           .map(country => country.subregion)
           .filter(Boolean)
       )].sort();
-
+  
       setAvailableSubregions(subregions);
-      setShowSubregions(true);
+      setShowSubregions(subregions.length > 0);
       setSelectedSubregion(''); // Reset subregión seleccionada
+  
+      // Filtramos los países para mostrar según la región seleccionada
+      const filteredCountries = countries.filter(country => 
+        country.region === matchedRegion &&
+        (!selectedSubregion || country.subregion === selectedSubregion)
+      );
+  
+      setVisibleCountries(filteredCountries.slice(0, maxCountries));
     } else {
       setShowSubregions(false);
-      setSelectedSubregion('');
       setAvailableSubregions([]);
+      setVisibleCountries([]);
     }
-  }, [searchTerm, countries]);
-
-  // Filtrar países
-  useEffect(() => {
-    if (!countries) return;
-
-    const filteredCountries = countries.filter((country) => {
-      if (!country) return false;
-      
-      // Si hay una subregión seleccionada, filtrar los paises por sección 
-      if (selectedSubregion) {
-        return country.subregion === selectedSubregion;
-      }
-      
-      // Si no hay subregión seleccionada pero hay término de búsqueda
-      const searchLower = searchTerm.toLowerCase().trim();
-      if (searchLower) {
-        return (
-          (country.name && country.name.toLowerCase().includes(searchLower)) ||
-          (country.region && country.region.toLowerCase().includes(searchLower)) ||
-          (country.subregion && country.subregion.toLowerCase().includes(searchLower))
-        );
-      }
-      
-      return true;
-    });
-
-    setVisibleCountries(filteredCountries.slice(0, maxCountries));
+    
     setCurrentIndex(0);
   }, [searchTerm, selectedSubregion, countries]);
+  
+  // Filtrar países// Reemplaza los dos useEffect existentes con este:
+useEffect(() => {
+  if (!countries) return;
+
+  const searchNormalized = searchTerm.toLowerCase().trim();
+  
+  // Mapeo de términos de búsqueda
+  const regionMappings = {
+    'america': 'Americas',
+    'americas': 'Americas',
+    'europa': 'Europe',
+    'europe': 'Europe',
+    'asia': 'Asia',
+    'africa': 'Africa',
+    'oceania': 'Oceania'
+  };
+
+  // Obtener la región normalizada
+  const matchedRegion = regionMappings[searchNormalized];
+
+  if (matchedRegion) {
+    // Filtrar países por la región
+    const regionCountries = countries.filter(country => 
+      country.region === matchedRegion
+    );
+
+    // Obtener subregiones disponibles
+    const subregions = [...new Set(
+      regionCountries
+        .map(country => country.subregion)
+        .filter(Boolean)
+    )].sort();
+
+    setAvailableSubregions(subregions);
+    setShowSubregions(true);
+
+    // Filtrar países según la subregión seleccionada
+    const filteredCountries = selectedSubregion
+      ? regionCountries.filter(country => country.subregion === selectedSubregion)
+      : regionCountries;
+
+    setVisibleCountries(filteredCountries.slice(0, maxCountries));
+  } else {
+    // Búsqueda general si no es una región
+    const filteredCountries = countries.filter(country => {
+      const nameMatch = country.name && country.name.toLowerCase().includes(searchNormalized);
+      const regionMatch = country.region && country.region.toLowerCase().includes(searchNormalized);
+      const subregionMatch = country.subregion && country.subregion.toLowerCase().includes(searchNormalized);
+      
+      return nameMatch || regionMatch || subregionMatch;
+    });
+
+    setShowSubregions(false);
+    setAvailableSubregions([]);
+    setSelectedSubregion('');
+    setVisibleCountries(filteredCountries.slice(0, maxCountries));
+  }
+
+  setCurrentIndex(0);
+}, [searchTerm, selectedSubregion, countries]);
 
   const handleSubregionChange = (e) => {
     setSelectedSubregion(e.target.value);
