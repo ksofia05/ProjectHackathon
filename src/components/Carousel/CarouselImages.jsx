@@ -15,70 +15,113 @@ const ImageCarousel = () => {
   const itemsPerView = 4;
   const maxCountries = 12;
 
-  // Detectar cuando se busca una región
   useEffect(() => {
     const searchLower = searchTerm.toLowerCase().trim();
-    
-    // Mapeo de términos de búsqueda a regiones
+  
+    // Mapeo de términos de búsqueda en español a inglés
     const regionMappings = {
       'america': 'Americas',
+      'americas': 'Americas',
       'europa': 'Europe',
+      'europe': 'Europe',
       'asia': 'Asia',
       'africa': 'Africa',
       'oceania': 'Oceania'
     };
-
-    // Encontrar la región que coincide con la búsqueda
-    const matchedRegion = Object.entries(regionMappings)
-      .find(([key]) => searchLower.includes(key));
-
+  
+    // Determinamos la región de forma uniforme en inglés
+    const matchedRegion = regionMappings[searchLower] || 
+                          Object.values(regionMappings).find(region => region.toLowerCase() === searchLower);
+  
     if (matchedRegion) {
-      // Obtener subregiones para la región encontrada
+      // Obtenemos subregiones para la región detectada
       const subregions = [...new Set(
         countries
-          ?.filter(country => country.region === matchedRegion[1])
+          .filter(country => country.region === matchedRegion)
           .map(country => country.subregion)
           .filter(Boolean)
       )].sort();
-
+  
       setAvailableSubregions(subregions);
-      setShowSubregions(true);
+      setShowSubregions(subregions.length > 0);
       setSelectedSubregion(''); // Reset subregión seleccionada
+  
+      // Filtramos los países para mostrar según la región seleccionada
+      const filteredCountries = countries.filter(country => 
+        country.region === matchedRegion &&
+        (!selectedSubregion || country.subregion === selectedSubregion)
+      );
+  
+      setVisibleCountries(filteredCountries.slice(0, maxCountries));
     } else {
       setShowSubregions(false);
-      setSelectedSubregion('');
       setAvailableSubregions([]);
+      setVisibleCountries([]);
     }
-  }, [searchTerm, countries]);
-
-  // Filtrar países
-  useEffect(() => {
-    if (!countries) return;
-
-    const filteredCountries = countries.filter((country) => {
-      if (!country) return false;
-      
-      // Si hay una subregión seleccionada, filtrar los paises por sección 
-      if (selectedSubregion) {
-        return country.subregion === selectedSubregion;
-      }
-      
-      // Si no hay subregión seleccionada pero hay término de búsqueda
-      const searchLower = searchTerm.toLowerCase().trim();
-      if (searchLower) {
-        return (
-          (country.name && country.name.toLowerCase().includes(searchLower)) ||
-          (country.region && country.region.toLowerCase().includes(searchLower)) ||
-          (country.subregion && country.subregion.toLowerCase().includes(searchLower))
-        );
-      }
-      
-      return true;
-    });
-
-    setVisibleCountries(filteredCountries.slice(0, maxCountries));
+    
     setCurrentIndex(0);
   }, [searchTerm, selectedSubregion, countries]);
+  
+  // Filtrar países// Reemplaza los dos useEffect existentes con este:
+useEffect(() => {
+  if (!countries) return;
+
+  const searchNormalized = searchTerm.toLowerCase().trim();
+  
+  // Mapeo de términos de búsqueda
+  const regionMappings = {
+    'america': 'Americas',
+    'americas': 'Americas',
+    'europa': 'Europe',
+    'europe': 'Europe',
+    'asia': 'Asia',
+    'africa': 'Africa',
+    'oceania': 'Oceania'
+  };
+
+  // Obtener la región normalizada
+  const matchedRegion = regionMappings[searchNormalized];
+
+  if (matchedRegion) {
+    // Filtrar países por la región
+    const regionCountries = countries.filter(country => 
+      country.region === matchedRegion
+    );
+
+    // Obtener subregiones disponibles
+    const subregions = [...new Set(
+      regionCountries
+        .map(country => country.subregion)
+        .filter(Boolean)
+    )].sort();
+
+    setAvailableSubregions(subregions);
+    setShowSubregions(true);
+
+    // Filtrar países según la subregión seleccionada
+    const filteredCountries = selectedSubregion
+      ? regionCountries.filter(country => country.subregion === selectedSubregion)
+      : regionCountries;
+
+    setVisibleCountries(filteredCountries.slice(0, maxCountries));
+  } else {
+    // Búsqueda general si no es una región
+    const filteredCountries = countries.filter(country => {
+      const nameMatch = country.name && country.name.toLowerCase().includes(searchNormalized);
+      const regionMatch = country.region && country.region.toLowerCase().includes(searchNormalized);
+      const subregionMatch = country.subregion && country.subregion.toLowerCase().includes(searchNormalized);
+      
+      return nameMatch || regionMatch || subregionMatch;
+    });
+
+    setShowSubregions(false);
+    setAvailableSubregions([]);
+    setSelectedSubregion('');
+    setVisibleCountries(filteredCountries.slice(0, maxCountries));
+  }
+
+  setCurrentIndex(0);
+}, [searchTerm, selectedSubregion, countries]);
 
   const handleSubregionChange = (e) => {
     setSelectedSubregion(e.target.value);
@@ -106,10 +149,10 @@ const ImageCarousel = () => {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 relative">
       <div className="text-center text-black font-dongle transition-shadow duration-300 p-6 rounded-lg">
-        <h1 className="text-5xl mb-1">Escoge Tu Próximo Destino</h1>
-        <h2 className="text-3xl">Selecciona el País que Tengas en Mente</h2>
+        <h1 className="text-5xl sm:text-6xl mb-1">Escoge Tu Próximo Destino</h1>
+        <h2 className="text-3xl sm:text-4xl">Selecciona el País que Tengas en Mente</h2>
       </div>
-
+  
       <div className="flex flex-col gap-4 my-4">
         {/* Buscador */}
         <div className="flex justify-center">
@@ -121,8 +164,8 @@ const ImageCarousel = () => {
             className="w-full max-w-md px-4 py-2 border rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-
-        {/* Select de Subregiones (aparece solo cuando se busca una región) */}
+  
+        {/* Select de Subregiones */}
         {showSubregions && availableSubregions.length > 0 && (
           <div className="flex justify-center">
             <select
@@ -140,7 +183,7 @@ const ImageCarousel = () => {
           </div>
         )}
       </div>
-
+  
       {visibleCountries.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
           No se encontraron países que coincidan con tu búsqueda
@@ -149,11 +192,11 @@ const ImageCarousel = () => {
         <div className="relative overflow-visible py-8">
           <button 
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
           >
             <ChevronLeft className="w-6 h-6 text-gray-700" />
           </button>
-
+  
           <div className="flex gap-4 transition-transform duration-500 ease-in-out mt-8">
             {getCurrentCountries().map((country, index) => (
               <div key={country.name || index} className="relative">
@@ -170,8 +213,8 @@ const ImageCarousel = () => {
                     />
                   </div>
                 </div>
-
-                <div className="flex-none w-64 h-80 relative rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
+  
+                <div className="flex-none w-64 h-80 sm:w-48 sm:h-72 lg:w-64 lg:h-80 relative rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
                   <div 
                     className="absolute inset-0 bg-cover bg-center"
                     style={{
@@ -180,22 +223,22 @@ const ImageCarousel = () => {
                     }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                    <h3 className="text-white text-xl font-bold text-center">{country.name}</h3>
+                    <h3 className="text-white text-xl sm:text-lg lg:text-xl font-bold text-center">{country.name}</h3>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-
+  
           <button 
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
           >
             <ChevronRight className="w-6 h-6 text-gray-700" />
           </button>
         </div>
       )}
-
+  
       <div className="flex justify-center gap-2 mt-4">
         {Array.from({ length: Math.ceil(visibleCountries.length / itemsPerView) }).map((_, idx) => (
           <button
@@ -209,7 +252,7 @@ const ImageCarousel = () => {
           />
         ))}
       </div>
-
+  
       {selectedCountry && (
         <CountryDetails 
           country={selectedCountry} 
@@ -218,18 +261,18 @@ const ImageCarousel = () => {
       )}
     </div>
   );
+  
 };
 
 const CountryDetails = ({ country, onClose }) => {
   return (
-    
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={onClose}>
       <div 
-        className="bg-white rounded-xl w-full max-w-3xl shadow-2xl overflow-hidden transform transition-all"
+        className="bg-white rounded-xl w-full max-w-3xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl shadow-2xl overflow-hidden transform transition-all"
         onClick={e => e.stopPropagation()}
       >
         {/* Encabezado con gradiente */}
-        <div className="relative h-32 bg-gradient-to-r from-blue-500 to-purple-600">
+        <div className="relative h-32 sm:h-40 md:h-48 bg-gradient-to-r from-blue-500 to-purple-600">
           {/* Botón de cerrar */}
           <button 
             onClick={onClose}
@@ -247,12 +290,12 @@ const CountryDetails = ({ country, onClose }) => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <h2 className="text-2xl font-bold text-white pb-8">{country.name}</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white pb-8">{country.name}</h2>
           </div>
         </div>
 
         {/* Contenido principal */}
-        <div className="pt-12 p-8 grid grid-cols-2 gap-6">
+        <div className="pt-12 p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
           {/* Columna izquierda */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -278,14 +321,6 @@ const CountryDetails = ({ country, onClose }) => {
                 <p className="font-medium">{country.subregion}</p>
               </div>
             </div>
-
-            {/* <div className="flex items-center gap-3">
-              <Users className="w-5 h-5 text-gray-500" />
-              <div>
-                <p className="text-sm text-gray-500">Gentilicio</p>
-                <p className="font-medium">{country.demonym}</p>
-              </div>
-            </div> */}
           </div>
 
           {/* Columna derecha */}
