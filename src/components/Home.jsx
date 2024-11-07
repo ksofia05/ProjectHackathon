@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './Home.css';
 import photosData from '../data/photos.json';
 import Navbar from "./Navbar";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook, faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 const Home = () => {
   const [photos, setPhotos] = useState([]);
@@ -40,6 +42,21 @@ const Home = () => {
           {photosData.map((photo, index) => (
             <img key={index} src={photo.src} alt={photo.alt} className="photo-item" />
           ))}
+          <section id="contact" className="section contact-section">
+        <h2>Contacto</h2>
+        <p>Síguenos en nuestras redes sociales y contáctanos por WhatsApp</p>
+        <div className="social-icons">
+          <a href="https://www.facebook.com/tuperfil" target="_blank" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faFacebook} className="icon facebook-icon" />
+          </a>
+          <a href="https://www.instagram.com/tuperfil" target="_blank" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faInstagram} className="icon instagram-icon" />
+          </a>
+          <a href="https://wa.me/tu-numero" target="_blank" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faWhatsapp} className="icon whatsapp-icon" />
+          </a>
+        </div>
+      </section>
         </div>
       </section>
     </div>
