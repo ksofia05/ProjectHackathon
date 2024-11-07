@@ -44,8 +44,7 @@ const ImageCarousel = () => {
   
       setAvailableSubregions(subregions);
       setShowSubregions(subregions.length > 0);
-      setSelectedSubregion(''); // Reset subregión seleccionada
-  
+     
       // Filtramos los países para mostrar según la región seleccionada
       const filteredCountries = countries.filter(country => 
         country.region === matchedRegion &&
@@ -147,10 +146,10 @@ useEffect(() => {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 relative">
-      <div className="text-center text-black font-dongle transition-shadow duration-300 p-6 rounded-lg m-[5%]">
-        <h1 className="text-5xl sm:text-6xl mb-1">Escoge Tu Próximo Destino</h1>
-        <h2 className="text-3xl sm:text-4xl">Selecciona el País que Tengas en Mente</h2>
+    <div className="w-full max-w-6xl mx-auto px-4 relative mb-[1%]">
+      <div className="text-center text-black font-dongle transition-shadow duration-300 p-6 rounded-lg mt-[6%]">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl mb-1">Escoge Tu Próximo Destino</h1>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl">Selecciona el País que Tengas en Mente</h2>
       </div>
   
       <div className="flex flex-col gap-4 my-4">
@@ -197,7 +196,7 @@ useEffect(() => {
             <ChevronLeft className="w-6 h-6 text-gray-700" />
           </button>
   
-          <div className="flex gap-4 transition-transform duration-500 ease-in-out mt-8">
+          <div className="flex flex-wrap justify-center gap-4 transition-transform duration-500 ease-in-out mt-8">
             {getCurrentCountries().map((country, index) => (
               <div key={country.name || index} className="relative">
                 <div 
@@ -214,7 +213,7 @@ useEffect(() => {
                   </div>
                 </div>
   
-                <div className="flex-none w-64 h-80 sm:w-48 sm:h-72 lg:w-64 lg:h-80 relative rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
+                <div className="flex-none w-48 h-64 sm:w-40 sm:h-56 lg:w-48 lg:h-64 relative rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
                   <div 
                     className="absolute inset-0 bg-cover bg-center"
                     style={{
@@ -223,7 +222,7 @@ useEffect(() => {
                     }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                    <h3 className="text-white text-xl sm:text-lg lg:text-xl font-bold text-center">{country.name}</h3>
+                    <h3 className="text-white text-lg sm:text-base lg:text-lg font-bold text-center">{country.name}</h3>
                   </div>
                 </div>
               </div>
@@ -262,6 +261,7 @@ useEffect(() => {
     </div>
   );
   
+  
 };
 
 const CountryDetails = ({ country, onClose }) => {
@@ -293,9 +293,9 @@ const CountryDetails = ({ country, onClose }) => {
             <h2 className="text-2xl sm:text-3xl font-bold text-white pb-8">{country.name}</h2>
           </div>
         </div>
-
+  
         {/* Contenido principal */}
-        <div className="pt-12 p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div className="pt-12 p-4 sm:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
           {/* Columna izquierda */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -305,7 +305,7 @@ const CountryDetails = ({ country, onClose }) => {
                 <p className="font-medium">{country.capital}</p>
               </div>
             </div>
-
+  
             <div className="flex items-center gap-3">
               <Globe className="w-5 h-5 text-gray-500" />
               <div>
@@ -313,7 +313,7 @@ const CountryDetails = ({ country, onClose }) => {
                 <p className="font-medium">{country.region}</p>
               </div>
             </div>
-
+  
             <div className="flex items-center gap-3">
               <MapPin className="w-5 h-5 text-gray-500" />
               <div>
@@ -322,7 +322,7 @@ const CountryDetails = ({ country, onClose }) => {
               </div>
             </div>
           </div>
-
+  
           {/* Columna derecha */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -332,7 +332,7 @@ const CountryDetails = ({ country, onClose }) => {
                 <p className="font-medium">{country.currency}</p>
               </div>
             </div>
-
+  
             <div className="flex items-center gap-3">
               <Languages className="w-5 h-5 text-gray-500" />
               <div>
@@ -340,7 +340,7 @@ const CountryDetails = ({ country, onClose }) => {
                 <p className="font-medium">{country.languages}</p>
               </div>
             </div>
-
+  
             <div className="flex items-center gap-3">
               <Map className="w-5 h-5 text-gray-500" />
               <div>
@@ -350,9 +350,9 @@ const CountryDetails = ({ country, onClose }) => {
             </div>
           </div>
         </div>
-
+  
         {/* Footer con estadísticas adicionales */}
-        <div className="bg-gray-50 px-8 py-4 mt-4 flex justify-between text-sm text-gray-500">
+        <div className="bg-gray-50 px-4 sm:px-8 py-4 mt-4 flex justify-between text-sm text-gray-500">
           <div>
             <span className="font-medium">{country.population?.toLocaleString()}</span> habitantes
           </div>
@@ -363,6 +363,7 @@ const CountryDetails = ({ country, onClose }) => {
       </div>
     </div>
   );
+  
 };
 
 
