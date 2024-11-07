@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useTransition, animated } from '@react-spring/web';
-import '../components/homePage/home.css';
 import photosData from '../data/Photos.json';
 import Navbar from "../components/navbar/Navbar";
 import AboutUs from '../components/aboutUs/aboutUs';
