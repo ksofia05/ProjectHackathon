@@ -6,6 +6,7 @@ import Navbar from "../components/navbar/Navbar";
 import AboutUs from '../components/aboutUs/aboutUs';
 import Blog from '../components/blog/blog';
 import rasgadoInferior from '../../public/images/rasgadoInferior.png';
+import Contact from '../components/contact/contact';
 
 const Home = () => {
   const [photos, setPhotos] = useState([]);
@@ -43,62 +44,60 @@ const Home = () => {
     <div>
       <Navbar />
 
-      <div className="min-h-screen relative" id="home">
-      <div className="min-h-screen relative" id="home">
-  {/* Fondo animado y demás contenido */}
-
-  {/* Intro-text en la parte inferior lateral izquierda */}
-  <div className="absolute bottom-0 left-0 pl-[4%] pr-[20%] mb-[8%]">
-    <h1 className="text-white text-9xl font-dongle font-bold">Bienvenido a GoGlobal</h1>
-    <p className="text-white text-2xl font-montserrat font-semibold">Tu próxima aventura está cruzando la pantalla!</p>
-  </div>
-
-  {/* Resto del contenido */}
-</div>
-
-
-        {/* Fondo animado con imágenes usando react-spring */}
-        <div className="photo-container">
+      {/* Contenedor principal del Home */}
+      <div className="relative min-h-screen flex flex-col justify-center items-start" id="home">
+        
+        {/* Fondo animado y demás contenido */}
+        <div className="photo-container absolute top-0 left-0 w-full h-full">
           {transitions((style, item) => (
             <animated.div
-            key={photos[item].id}
-            style={{
-              ...style,
-              backgroundImage: `url(${photos[item].url})`,
-              backgroundSize: 'cover',
-              height: '100vh',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              zIndex: -1,
-              filter: 'brightness(0.5)', // Oscurece la imagen
-            }}
-            className="photo-item"
-          />
+              key={photos[item].id}
+              style={{
+                ...style,
+                backgroundImage: `url(${photos[item].url})`,
+                backgroundSize: 'cover',
+                height: '100vh',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                zIndex: -1,
+                filter: 'brightness(0.5)', // Oscurece la imagen
+              }}
+              className="photo-item"
+            />
           ))}
         </div>
 
+        {/* Texto de bienvenida responsivo */}
+        <div className="absolute bottom-8 left-4 lg:bottom-16 lg:left-16 lg:pr-[20%]">
+          <h1 className="text-white text-4xl sm:text-6xl lg:text-8xl font-bold font-dongle leading-tight">
+            Bienvenido a GoGlobal
+          </h1>
+          <p className="text-white text-lg sm:text-xl lg:text-2xl font-semibold font-montserrat">
+            ¡Tu próxima aventura está cruzando la pantalla!
+          </p>
+        </div>
+
+        {/* Rasgado inferior responsivo */}
         <img
           src={rasgadoInferior}
           alt="Rasgado Inferior"
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            width: '100%',
-            height: 'auto',
-            zIndex: 1, // Colocar la imagen encima de todo
-          }}
+          className="absolute bottom-0 left-0 w-full h-auto z-10"
         />
       </div>
 
+      {/* Sección "Quienes Somos" */}
       <div id="about">
         <AboutUs />
       </div>
 
+      {/* Sección "Blog" */}
       <div id="blog">
         <Blog />
+      </div>
+      <div id="contact">
+        <Contact />
       </div>
     </div>
   );
