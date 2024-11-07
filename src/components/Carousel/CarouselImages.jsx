@@ -148,7 +148,7 @@ useEffect(() => {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 relative">
-      <div className="text-center text-black font-dongle transition-shadow duration-300 p-6 rounded-lg">
+      <div className="text-center text-black font-dongle transition-shadow duration-300 p-6 rounded-lg m-[5%]">
         <h1 className="text-5xl sm:text-6xl mb-1">Escoge Tu Próximo Destino</h1>
         <h2 className="text-3xl sm:text-4xl">Selecciona el País que Tengas en Mente</h2>
       </div>
